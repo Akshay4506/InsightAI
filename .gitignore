@@ -1,0 +1,17 @@
+# secrets / env (any folder; .env.example is kept)
+.env
+.env.local
+.vercel/
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+# generated data
+backend/app/db/sample.db
+backend/chroma_store/
+# node
+node_modules/
+dist/
+*.log
+backend/data_cache/

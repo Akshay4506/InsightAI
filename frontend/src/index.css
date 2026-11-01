@@ -1,0 +1,47 @@
+/* Global styles: Tailwind layers, light/dark colour tokens, glass utilities, scrollbars. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour tokens as space-separated RGB so Tailwind opacity modifiers work. */
+:root, html.dark {
+  --bg: 10 10 15; --card: 18 18 26; --ink: 255 255 255;
+  --fg: 226 232 240; --muted: 148 163 184; --faint: 100 116 139;
+  --glow1: rgba(99, 102, 241, 0.14); --glow2: rgba(168, 85, 247, 0.10);
+  color-scheme: dark;
+}
+html.light {
+  --bg: 244 245 251; --card: 255 255 255; --ink: 15 23 42;
+  --fg: 30 41 59; --muted: 71 85 105; --faint: 100 116 139;
+  --glow1: rgba(99, 102, 241, 0.12); --glow2: rgba(168, 85, 247, 0.10);
+  color-scheme: light;
+}
+
+html, body, #root { height: 100%; }
+body {
+  @apply bg-bg text-fg font-sans antialiased;
+  background-image:
+    radial-gradient(900px 500px at 15% -10%, var(--glow1), transparent 60%),
+    radial-gradient(700px 500px at 100% 0%, var(--glow2), transparent 60%);
+  background-attachment: fixed;
+  transition: background-color .2s, color .2s;
+}
+
+@layer components {
+  .glass { @apply bg-card/70 backdrop-blur-xl border border-ink/[0.08] shadow-xl shadow-black/10; }
+  .gradient-text { @apply bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent; padding-bottom: 0.14em; }
+  .gradient-bg { background-image: linear-gradient(135deg, #6366f1, #a855f7); }
+  .lift { @apply transition-all duration-200 hover:-translate-y-0.5 hover:border-ink/20; }
+  .pill { @apply rounded-full px-2.5 py-0.5 text-[11px] font-medium; }
+  .field { @apply w-full rounded-xl border border-ink/10 bg-ink/[0.04] px-3.5 py-2.5 text-sm text-fg outline-none transition placeholder:text-faint focus:border-accent/60 focus:bg-ink/[0.06] disabled:cursor-not-allowed disabled:opacity-60; }
+}
+
+/* Light mode: darker shades for the pastel status colours used on dark backgrounds. */
+html.light .text-emerald-300, html.light .text-emerald-400 { color: #047857; }
+html.light .text-red-200\/80, html.light .text-red-300, html.light .text-red-400 { color: #b91c1c; }
+html.light .text-amber-200, html.light .text-amber-300\/80 { color: #b45309; }
+html.light .text-indigo-200, html.light .text-indigo-300 { color: #4338ca; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--ink) / 0.14); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
