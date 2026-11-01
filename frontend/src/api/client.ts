@@ -1,7 +1,9 @@
 /** Thin fetch wrapper around the backend API (adds the bearer token, normalises errors). */
 import type { AskResponse, ConversationSummary, Dataset, Message, SchemaTable, User } from "../types";
 
-const BASE = import.meta.env.VITE_API_URL ?? "";
+// Backend origin for deployed builds (e.g. https://insightai-api.onrender.com). Trailing slashes and a trailing
+// "/api" are stripped so a slightly wrong value cannot produce paths like /api/api/auth/signup.
+const BASE = String(import.meta.env.VITE_API_URL ?? "").trim().replace(/\/+$/, "").replace(/\/api$/i, "");
 const TOKEN_KEY = "insightai-token";
 
 export class BackendUnreachable extends Error {}
